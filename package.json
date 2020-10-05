@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "parcel": "parcel ./src/index.html",
+    "format": "prettier ./src/* --write",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -22,6 +23,7 @@
     "react-dom": "^16.13.1"
   },
   "devDependencies": {
-    "parcel-bundler": "^1.12.4"
+    "parcel-bundler": "^1.12.4",
+    "prettier": "^2.1.2"
   }
 }
