@@ -4,15 +4,11 @@
   "description": "My React todo App",
   "main": "index.js",
   "scripts": {
-<<<<<<< HEAD
-    "build": "parcel build ./src/index.html",    
+    "build": "parcel build ./src/index.html",
     "dev": "parcel ./src/index.html",
     "format": "prettier ./src/* --write",
     "lint": "eslint ./src/*.js",
-=======
     "parcel": "parcel ./src/index.html",
-    "format": "prettier ./src/* --write",
->>>>>>> 1ad0eaa47bfce8530f47d16e33596bcd68740b8b
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
