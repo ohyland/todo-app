@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import ReactDOM from "react-dom";
 
+import "./style.css";
 import TodoItem from "./TodoItem";
 
 const TodoItemsFromOutSide = [
