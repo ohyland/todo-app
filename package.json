@@ -6,6 +6,8 @@
   "scripts": {
     "build": "parcel build ./src/index.html",    
     "dev": "parcel ./src/index.html",
+    "format": "prettier ./src/* --write",
+    "lint": "eslint ./src/*.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
