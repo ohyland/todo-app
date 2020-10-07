@@ -4,7 +4,7 @@ import ReactDOM from "react-dom";
 import "./style.css";
 import TodoItem from "./TodoItem";
 
-const myTodos = localStorage.getItem("todos") || [];
+const myTodos = localStorage.getItem("todos") || "[]";
 
 // APP
 const App = () => {
@@ -25,6 +25,7 @@ const App = () => {
     localStorage.setItem("todos", JSON.stringify(newTodos));
   };
 
+  // change val
   // when checkbox is cliked the id of the item is passed in
   const updateTodo = (id) => {
     // map - returns a new array: map through each item and find the item in the current todo list and change the value
@@ -38,11 +39,17 @@ const App = () => {
     });
 
     setTodos(newTodos); // put todo in the todo list
-
+    // reset todos
     localStorage.setItem("todos", JSON.stringify(newTodos));
   };
 
+  // click X and delete the item
   const deleteTodo = (id) => {
+    // filter - filters out anything that doesn't match the criteria
+    // eg:  > const myNumbers = [1, 2 , 3, 4, 5]
+    //      myNumbers.filter(num => num !== 2)
+    //      > [1, 2 , 3, 4, 5]
+    //      
     const newTodos = todos.filter((todo) => todo.id !== id);
     setTodos(newTodos);
     localStorage.setItem("todos", JSON.stringify(newTodos));
