@@ -4,8 +4,9 @@ import ReactDOM from "react-dom";
 import "./style.css";
 import TodoItem from "./TodoItem";
 
+const myTodos = localStorage.getItem("todos") || [];
 const App = () => {
-  const [todos, setTodos] = useState([]);
+  const [todos, setTodos] = useState(JSON.parse(myTodos));
   const [newTodo, setNewTodo] = useState("");
 
   const handleSubmit = (e) => {
@@ -16,6 +17,7 @@ const App = () => {
     ];
     setTodos(newTodos);
     setNewTodo("");
+    localStorage.setItem("todos", JSON.stringify(newTodos));
   };
 
   const updateTodo = (id) => {
@@ -27,6 +29,14 @@ const App = () => {
     });
 
     setTodos(newTodos);
+
+    localStorage.setItem("todos", JSON.stringify(newTodos));
+  };
+
+  const deleteTodo = (id) => {
+    const newTodos = todos.filter((todo) => todo.id !== id);
+    setTodos(newTodos);
+    localStorage.setItem("todos", JSON.stringify(newTodos));
   };
 
   return (
@@ -54,6 +64,7 @@ const App = () => {
                 labelName={item.labelName}
                 completed={item.completed}
                 handleChange={updateTodo}
+                handleDelete={deleteTodo}
               />
             );
           })}
