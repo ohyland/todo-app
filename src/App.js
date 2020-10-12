@@ -5,6 +5,7 @@ import ReactDOM from "react-dom";
 import "./style.css";
 import TodoItem from "./TodoItem";
 import Header from "./Header";
+import ToggleAll from "./ToggleAll";
 
 const ALL = 'all'
 const ACTIVE = 'active'
@@ -106,16 +107,7 @@ const App = () => {
         handleChange={setNewTodo}
       />
       <section className="main">
-        <input
-          id="toggle-all"
-          className="toggle-all"
-          type="checkbox"
-          onChange={(e) => {
-            toggleAll(e.target.checked);
-          }}
-          checked={!todos.some((todo) => !todo.completed)}
-        />
-        <label htmlFor="toggle-all" />
+       <ToggleAll toggleAll={toggleAll} todos={todos} />
         <ul className="todo-list">
           {nowShowingTodos.map((item) => {
             return (
