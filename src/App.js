@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 
+// import components
 import "./style.css";
 import TodoItem from "./TodoItem";
 
@@ -66,6 +67,17 @@ const App = () => {
     setTodos(newTodos);
   };
 
+  // check all on/off
+  const toggleAll = (checked) => {
+    //array to map through all todos
+    // checked == true || false
+    const newTodos = todos.map((todo) => {
+      return { ...todo, completed: checked };
+    });
+
+    setTodos(newTodos);
+  };
+
   // rendered in the DOM
   return (
     <div className="todoapp">
@@ -83,6 +95,16 @@ const App = () => {
         </form>
       </header>
       <section className="main">
+        <input
+            id="toggle-all"
+            className="toggle-all"
+            type="checkbox"
+            onChange={(e) => {
+              toggleAll(e.target.checked);
+            }}
+            checked={!todos.some((todo) => !todo.completed)}
+          />
+          <label htmlFor="toggle-all" />
         <ul className="todo-list">
           {todos.map((item) => {
             return (
