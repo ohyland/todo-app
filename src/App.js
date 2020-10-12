@@ -7,10 +7,11 @@ import "./style.css";
 import Header from "./Header";
 import ToggleAll from "./ToggleAll";
 import TodoList from "./TodoList";
+import Footer from "./Footer";
 
-const ALL = 'all'
-const ACTIVE = 'active'
-const COMPLETED = 'completed'
+export const ALL = "all";
+export const ACTIVE = "active";
+export const COMPLETED = "completed";
 
 // APP
 const App = () => {
@@ -99,6 +100,14 @@ const App = () => {
     setTodos(newTodos);
   };
 
+  const updateActiveFilter = (newFilter) => {
+    setTodoFilter(newFilter);
+  };
+
+  const clearCompleted = () => {
+    setTodos(todos.filter((todo) => !todo.completed));
+  };
+
   // rendered in the DOM
   return (
     <div className="todoapp">
@@ -108,63 +117,19 @@ const App = () => {
         handleChange={setNewTodo}
       />
       <section className="main">
-       <ToggleAll toggleAll={toggleAll} todos={todos} />
+        <ToggleAll toggleAll={toggleAll} todos={todos} />
         <TodoList
           todos={nowShowingTodos}
           handleChange={updateTodo}
           handleDelete={deleteTodo}
         />
       </section>
-      <footer className="footer">
-        <span className="todo-count">
-          <strong>{todos.filter((todo) => !todo.completed).length}</strong>
-          {todos.filter((todo) => !todo.completed).length > 1
-            ? " items "
-            : " item "}
-          left
-        </span>
-        <ul className="filters">
-          <li>
-            <a
-              className={todoFilter === ALL ? "selected" : ""}
-              onClick={() => {
-                setTodoFilter(ALL);
-              }}
-              href="#/"
-            >
-              All
-            </a>
-          </li>
-          <li>
-            <a
-              className={todoFilter === ACTIVE ? "selected" : ""}
-              onClick={() => {
-                setTodoFilter(ACTIVE);
-              }}
-              href="#/active"
-            >
-              Active
-            </a>
-          </li>
-          <li>
-            <a
-              className={todoFilter === COMPLETED ? "selected" : ""}
-              onClick={() => {
-                setTodoFilter(COMPLETED);
-              }}
-              href="#/completed"
-            >
-              Completed
-            </a>
-          </li>
-        </ul>
-        <button className="clear-completed"
-          onClick={() => {
-            setTodos(todos.filter((todo) => !todo.completed));
-          }}
-        >Clear Completed
-        </button>
-      </footer>
+      <Footer
+        todos={todos}
+        todoFilter={todoFilter}
+        handleClick={updateActiveFilter}
+        handleClear={clearCompleted}
+      />
     </div>
   );
 };
