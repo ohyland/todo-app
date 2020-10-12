@@ -19,8 +19,6 @@ const App = () => {
   useEffect(() => {
     const newTodos = JSON.parse(localStorage.getItem("todos") || "[]");
     setTodos(newTodos);
-    setNowShowingTodos(newTodos);
-
     let newTodoFromStorage = localStorage.getItem("new-todo");
     if (newTodoFromStorage) {
       newTodoFromStorage = JSON.parse(newTodoFromStorage);
@@ -31,17 +29,23 @@ const App = () => {
     setNewTodo(newTodoFromStorage);
   }, []);
 
+  useEffect(() => {
+    let newNowShowingTodos;
+
+    if (todoFilter === ACTIVE) {
+      newNowShowingTodos = todos.filter((todo) => !todo.completed);
+    } else if (todoFilter === COMPLETED) {
+      newNowShowingTodos = todos.filter((todo) => todo.completed);
+    } else {
+      newNowShowingTodos = todos;
+    }
+
+    setNowShowingTodos(newNowShowingTodos);
+  }, [todos, todoFilter]);
 
   useEffect(() => {
-    if (todoFilter === ALL) {
-      setNowShowingTodos(todos);
-    } else if (todoFilter === ACTIVE) {
-      // Only keep the unchecked items
-    } else if (todoFilter === COMPLETED) {
-      // Only keep the checked items
-    }
     localStorage.setItem("todos", JSON.stringify(todos));
-  }, [todos, todoFilter]);
+  }, [todos]);
 
   useEffect(() => {
     localStorage.setItem("new-todo", JSON.stringify(newTodo));
@@ -110,17 +114,17 @@ const App = () => {
       </header>
       <section className="main">
         <input
-            id="toggle-all"
-            className="toggle-all"
-            type="checkbox"
-            onChange={(e) => {
-              toggleAll(e.target.checked);
-            }}
-            checked={!todos.some((todo) => !todo.completed)}
-          />
-          <label htmlFor="toggle-all" />
+          id="toggle-all"
+          className="toggle-all"
+          type="checkbox"
+          onChange={(e) => {
+            toggleAll(e.target.checked);
+          }}
+          checked={!todos.some((todo) => !todo.completed)}
+        />
+        <label htmlFor="toggle-all" />
         <ul className="todo-list">
-          {todos.map((item) => {
+          {nowShowingTodos.map((item) => {
             return (
               <TodoItem
                 key={item.id}
@@ -135,20 +139,48 @@ const App = () => {
         </ul>
       </section>
       <footer className="footer">
-          <span className="todo-count">
-            <strong>2</strong> items left
-          </span>
-          <ul className="filter">
-            <li>
-              <a href="#/">All</a>
-            </li>
-            <li>
-              <a href="#/active">Active</a>
-            </li>
-            <li>
-              <a href="#/completed">Completed</a>
-            </li>
-          </ul>
+        <span className="todo-count">
+          <strong>{todos.filter((todo) => !todo.completed).length}</strong>
+          {todos.filter((todo) => !todo.completed).length > 1
+            ? " items "
+            : " item "}
+          left
+        </span>
+        <ul className="filters">
+          <li>
+            <a
+              className={todoFilter === ALL ? "selected" : ""}
+              onClick={() => {
+                setTodoFilter(ALL);
+              }}
+              href="#/"
+            >
+              All
+            </a>
+          </li>
+          <li>
+            <a
+              className={todoFilter === ACTIVE ? "selected" : ""}
+              onClick={() => {
+                setTodoFilter(ACTIVE);
+              }}
+              href="#/active"
+            >
+              Active
+            </a>
+          </li>
+          <li>
+            <a
+              className={todoFilter === COMPLETED ? "selected" : ""}
+              onClick={() => {
+                setTodoFilter(COMPLETED);
+              }}
+              href="#/completed"
+            >
+              Completed
+            </a>
+          </li>
+        </ul>
       </footer>
     </div>
   );
