@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 const Header = ({handleSubmit, newTodo, handleChange }) => {
     return (
         <header className="header">
-            <h1>Todos</h1>
+            <h1>Olivias Todos</h1>
             <form onSubmit={handleSubmit}>
             <input
                 className="new-todo"
